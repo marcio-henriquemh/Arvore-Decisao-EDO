@@ -32,9 +32,9 @@ if __name__ == "__main__":
     testar_sistema(250, 12000, 20000)    # super
     testar_sistema(250, -666, 20000)     # instavel
 
-    # ======================================================
+   
     # VALIDACAO COM 50 SISTEMAS ALEATORIOS
-    # ======================================================
+    
 
     print("\nGERANDO DATASET DE 50 SISTEMAS...\n")
 
@@ -70,10 +70,8 @@ if __name__ == "__main__":
 
 
 
-
-# ======================================================
 # PLOT DA ARVORE DE DECISAO FISICA
-# ======================================================
+
 
 def plotar_arvore():
     plt.figure(figsize=(10,7))
@@ -117,10 +115,8 @@ def plotar_arvore():
 plotar_arvore()
 
 
-
-# ======================================================
 # SIMULAR ALGUNS SISTEMAS DO DATASET
-# ======================================================
+
 
 print("\nSIMULANDO ALGUNS SISTEMAS DO DATASET...")
 
