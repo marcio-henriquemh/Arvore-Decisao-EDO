@@ -1,9 +1,9 @@
 from classe_modelagem_fisica import Modelo_Fisico
 import numpy as np
 
-# ==========================================================
+
 # ANALISE DE ESTABILIDADE DO SISTEMA MASSA–MOLA–AMORTECEDOR
-# ==========================================================
+
 
 class Estabilidade_sistema(Modelo_Fisico):
 
@@ -55,9 +55,9 @@ class Estabilidade_sistema(Modelo_Fisico):
 
 
 
-# ==========================================================
-# ARVORE DE DECISAO BASEADA NA FISICA (SEM MACHINE LEARNING)
-# ==========================================================
+
+# ARVORE DE DECISAO BASEADA NA FISICA
+
 
 class ArvoreDecisaoFisica:
 
@@ -91,9 +91,9 @@ class ArvoreDecisaoFisica:
         return "Sub"
 
 
-# ==========================================================
+
 # GERADOR DE DATASET FISICO (50 SISTEMAS ALEATORIOS)
-# ==========================================================
+
 
 def gerar_sistema_aleatorio():
     """
