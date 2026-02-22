@@ -82,7 +82,4 @@ if __name__ == "__main__":
     ax2.set_title("Respostas Temporais"); plt.show()
 
 
-
-
-    # No seu main:
 imprimir_arvore(arvore_id3)
