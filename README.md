@@ -101,30 +101,33 @@ O sistema compara:
 - Classificação da árvore de decisão
 
 Exemplo de saída:
+### === ANÁLISE DE INFORMAÇÃO ===
+*   **Entropia Total H(S):** 1.4789
+*   **Ganho $\sigma$:** 0.4022 (Incerteza Residual: 1.0767)
+*   **Ganho $\zeta$:** 1.1643 (Incerteza Residual: 0.3146)
+*   **ACURÁCIA FINAL ->** Física: 100.0% | ID3: 100.0%
 
-ACURÁCIA DA ÁRVORE: 98.00%
+### === COMPARAÇÃO DE PREVISÕES (AMOSTRAS) ===
 
-Distribuição das classes:
-Critico: 3  
-Instavel: 3  
-Sub: 26  
-Super: 18  
 
-Isso prova que a árvore representa corretamente a teoria física.
+| Sistema (m,b,k) | Real | Prev. Física | Prev. ID3 |
+| :--- | :--- | :--- | :--- |
+| 1493, -176, 6118 | Instavel | Instavel | Instavel |
+| 1454, 5727, 25505 | Sub | Sub | Sub |
+| 1879, 16033, 13430 | Super | Super | Super |
+| 706, 17974, 5561 | Super | Super | Super |
+| 1341, -643, 30008 | Instavel | Instavel | Instavel |
+| 1482, 4331, 20701 | Sub | Sub | Sub |
+| 1145, 3202, 24768 | Sub | Sub | Sub |
+| 746, 7823, 16400 | Super | Super | Super |
+| 1896, 9583, 19864 | Sub | Sub | Sub |
+| 1499, 16954, 22303 | Super | Super | Super |
+
+**Conclusão:** Isso prova que a árvore representa corretamente a teoria física.
+
 
 ---
 
-# 📈 Visualizações geradas
-
-O projeto também gera:
-
-🌳 Imagem da árvore de decisão  
-Gerada automaticamente via Graphviz.
-
-Arquivo produzido:
-arvore_fisica_suspensao.png
-
----
 
 # 📂 Estrutura do projeto
 
