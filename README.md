@@ -131,8 +131,8 @@ arvore_fisica_suspensao.png
 projeto/
  ├── classe_modelagem_fisica.py  
  ├── analise_estabilidade.py  
- ├── gerar_imagem_arvore.py  
- ├── main.py  
+ ├── massa-mola-arvore.py  
+ ├── algoritmoarvoredecisao.py  
  └── README.md  
 
 ---
@@ -141,22 +141,23 @@ projeto/
 
 ## 1️⃣ Instalar dependências
 
-pip install numpy matplotlib scipy scikit-learn graphviz
+pip install numpy matplotlib scipy
+### Detalhes técnicos (Baseado nas bibliotecas que você citou):
+*   `numpy` (manipulação numérica)
+*   `matplotlib.pyplot` (gráficos)
+*   `scipy.integrate.odeint` (integração de equações diferenciais)
+*   `math` (biblioteca padrão)
+*   `collections.Counter` (biblioteca padrão)
 
-Linux:
+O comando `pip install numpy matplotlib scipy` instala todas as bibliotecas de terceiros necessárias.
 
-sudo pacman -S graphviz   # Arch  
-sudo apt install graphviz # Ubuntu  
 
 ---
 
 ## 2️⃣ Rodar o projeto
 
-python main.py
+python massa-mola-arvore.py
 
-Gerar imagem da árvore:
-
-python gerar_imagem_arvore.py
 
 ---
 
@@ -169,7 +170,6 @@ Este projeto integra:
 - Análise de Estabilidade  
 - Teoria de Controle  
 - Árvores de Decisão  
-- Explicabilidade em IA (XAI)
 
 ---
 
@@ -177,10 +177,6 @@ Este projeto integra:
 
 Mostrar que **Machine Learning pode ser interpretável**  
 quando combinamos modelos de decisão com leis físicas.
-
-Exemplo de:
-Physics-Informed Decision Trees
-
 ---
 
 # 👨‍💻 Autor
