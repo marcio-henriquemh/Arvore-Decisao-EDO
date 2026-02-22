@@ -145,7 +145,7 @@ projeto/
 ## 1️⃣ Instalar dependências
 
 pip install numpy matplotlib scipy
-### Detalhes técnicos (Baseado nas bibliotecas que você citou):
+### Detalhes técnicos :
 *   `numpy` (manipulação numérica)
 *   `matplotlib.pyplot` (gráficos)
 *   `scipy.integrate.odeint` (integração de equações diferenciais)
