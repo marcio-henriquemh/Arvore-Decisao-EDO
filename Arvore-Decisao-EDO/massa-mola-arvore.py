@@ -1,156 +1,88 @@
-from classe_modelagem_fisica import Modelo_Fisico
-import numpy as np, random
+import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 from scipy.integrate import odeint
-from analise_estabilidade import Estabilidade_sistema,ArvoreDecisaoFisica
+from classe_modelagem_fisica import Modelo_Fisico
+from analise_estabilidade import Estabilidade_sistema, ArvoreDecisaoFisica, gerar_dataset
+from algoritmoarvoredecisao import *
+
+# --- FUNÇÕES AUXILIARES ---
+def calcular_metricas(dataset, arvore_id3=None):
+    """Calcula Acurácias e Ganhos de Informação."""
+    ds_disc = discretizar_dataset(dataset)
+    # Acurácia Física
+    af = ArvoreDecisaoFisica()
+    acc_f = sum(1 for d in dataset if af.prever(Modelo_Fisico(d[0], d[1], d[2])) == d[-1]) / len(dataset)
+    
+    # Acurácia ID3 e Ganhos
+    acc_id3 = sum(1 for i, d in enumerate(dataset) if prever_id3(arvore_id3, ds_disc[i][:2]) == d[-1]) / len(dataset)
+    gi = { "σ": ganho_informacao(ds_disc, 0), "ζ": ganho_informacao(ds_disc, 1), "H(S)": entropia(ds_disc) }
+    
+    return acc_f*100, acc_id3*100, gi
 
 
+def comparar_previsoes(dataset, arvore_id3, qtd=10):
+    """Gera uma tabela comparando as abordagens com os dados reais."""
+    ds_disc = discretizar_dataset(dataset)
+    af = ArvoreDecisaoFisica()
+    
+    comparativo = []
+    for i in range(min(qtd, len(dataset))):
+        m, b, k = dataset[i][0:3]
+        real = dataset[i][-1]
+        
+        prev_fisica = af.prever(Modelo_Fisico(m, b, k))
+        prev_id3 = prever_id3(arvore_id3, ds_disc[i][:2])
+        
+        comparativo.append([f"{m:.0f},{b:.0f},{k:.0f}", real, prev_fisica, prev_id3])
+    
+    df_comp = pd.DataFrame(comparativo, columns=["Sistema (m,b,k)", "Real", "Prev. Física", "Prev. ID3"])
+    print("\n=== COMPARAÇÃO DE PREVISÕES (AMOSTRAS) ===")
+    print(df_comp.to_string(index=False))
 
+def exibir_metricas_completas(dataset, arvore_id3):
+    """Exibe Entropia, Ganhos e Acurácias."""
+    ds_disc = discretizar_dataset(dataset)
+    h_total = entropia(ds_disc)
+    gi = {"σ": ganho_informacao(ds_disc, 0), "ζ": ganho_informacao(ds_disc, 1)}
+    
+    af = ArvoreDecisaoFisica()
+    acc_f = sum(1 for d in dataset if af.prever(Modelo_Fisico(d[0], d[1], d[2])) == d[-1]) / len(dataset)
+    acc_id3 = sum(1 for i, d in enumerate(dataset) if prever_id3(arvore_id3, ds_disc[i][:2]) == d[-1]) / len(dataset)
+
+    print(f"\n=== ANÁLISE DE INFORMAÇÃO ===")
+    print(f"Entropia Total H(S): {h_total:.4f}")
+    print(f"Ganho σ: {gi['σ']:.4f} (Incerteza Residual: {h_total - gi['σ']:.4f})")
+    print(f"Ganho ζ: {gi['ζ']:.4f} (Incerteza Residual: {h_total - gi['ζ']:.4f})")
+    print(f"\nACURÁCIA FINAL -> Física: {acc_f*100:.1f}% | ID3: {acc_id3*100:.1f}%")
 
 if __name__ == "__main__":
+    # 1. Preparação
+    dataset = gerar_dataset(100)
+    ds_disc = discretizar_dataset(dataset)
+    arvore_id3 = learn_decision_tree(ds_disc, [0, 1])
 
-    print("\nTESTANDO ARVORE DE DECISAO FISICA\n")
+    # 2. Saídas de Dados
+    exibir_metricas_completas(dataset, arvore_id3)
+    comparar_previsoes(dataset, arvore_id3)
 
-    arvore = ArvoreDecisaoFisica()
-
-    def testar_sistema(m,b,k):
-        sistema = Modelo_Fisico(m,b,k)
-        analise = Estabilidade_sistema(m,b,k)
-
-        classe_real = analise.classificar()
-        classe_arvore = arvore.prever(sistema)
-
-        print("-----------------------------------")
-        print(f"m={m}  b={b}  k={k}")
-        print("Classe fisica real:", classe_real)
-        print("Classe pela arvore:", classe_arvore)
-
-    # exemplos individuais
-    testar_sistema(250, 600, 20000)        # nao amortecido
-    testar_sistema(250, 1000, 20000)     # subamortecido
-    testar_sistema(250, 344, 20000)     # critico aprox
-    testar_sistema(250, 12000, 20000)    # super
-    testar_sistema(250, -666, 20000)     # instavel
-
-   
-    # VALIDACAO COM 50 SISTEMAS ALEATORIOS
+    # 3. Visualização Gráfica
+    df = pd.DataFrame(dataset, columns=["m","b","k","wn","zeta","sigma","classe"])
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
     
+    for c, cor in {"Sub":"blue", "Super":"green", "Critico":"red", "Instavel":"orange", "Nao amortecido":"purple"}.items():
+        sub = df[df["classe"] == c]
+        ax1.scatter(sub["zeta"], sub["sigma"], c=cor, label=c, edgecolors='k')
+    ax1.set_title("Espaço ζ vs σ"); ax1.legend()
 
-    print("\nGERANDO DATASET DE 50 SISTEMAS...\n")
-
-    from analise_estabilidade import gerar_dataset  # importa o gerador
-
-    dataset = gerar_dataset(50)
-
-    def validar_arvore(dataset):
-        arvore = ArvoreDecisaoFisica()
-        acertos = 0
-        
-        for linha in dataset:
-            m,b,k,_,_,_,classe_real = linha
-            
-            sistema = Modelo_Fisico(m,b,k)
-            previsao = arvore.prever(sistema)
-            
-            if previsao == classe_real:
-                acertos += 1
-        
-        acc = acertos/len(dataset)*100
-        print(f"\nACURÁCIA DA ÁRVORE: {acc:.2f}%")
-
-    validar_arvore(dataset)
-
-    print("\nDistribuição das classes no dataset:")
-
-    classes, contagem = np.unique(dataset[:,6], return_counts=True)
-    for c,n in zip(classes,contagem):
-        print(f"{c}: {n}")
-
-    print("\n PROJETO COMPLETO E VALIDADO!")
+    t = np.linspace(0, 5, 500)
+    for i in range(10):
+        sis = Modelo_Fisico(dataset[i][0], dataset[i][1], dataset[i][2])
+        ax2.plot(t, odeint(sis.edo, [0.1, 0], t)[:, 0], alpha=0.5)
+    ax2.set_title("Respostas Temporais"); plt.show()
 
 
 
-# PLOT DA ARVORE DE DECISAO FISICA
 
-
-def plotar_arvore():
-    plt.figure(figsize=(10,7))
-    plt.axis("off")
-
-    def caixa(texto, x, y):
-        plt.text(x, y, texto, ha='center', va='center',
-                 bbox=dict(boxstyle="round,pad=0.4"))
-
-    # nós
-    caixa("σ ≥ 0 ?", 0.5, 0.9)
-
-    caixa("Instável", 0.85, 0.7)
-
-    caixa("ζ = 0 ?", 0.25, 0.7)
-    caixa("Não amortecido", 0.05, 0.5)
-
-    caixa("ζ < 1 ?", 0.35, 0.5)
-    caixa("Subamortecido", 0.20, 0.3)
-
-    caixa("|ζ-1|<0.05 ?", 0.55, 0.3)
-    caixa("Crítico", 0.45, 0.1)
-    caixa("Superamortecido", 0.75, 0.1)
-
-    # conexões
-    plt.plot([0.5,0.85],[0.87,0.73])
-    plt.plot([0.5,0.25],[0.87,0.73])
-
-    plt.plot([0.25,0.05],[0.67,0.53])
-    plt.plot([0.25,0.35],[0.67,0.53])
-
-    plt.plot([0.35,0.20],[0.47,0.33])
-    plt.plot([0.35,0.55],[0.47,0.33])
-
-    plt.plot([0.55,0.45],[0.27,0.13])
-    plt.plot([0.55,0.75],[0.27,0.13])
-
-    plt.title("Árvore de Decisão Baseada na Física")
-    plt.show()
-
-plotar_arvore()
-
-
-# SIMULAR ALGUNS SISTEMAS DO DATASET
-
-
-print("\nSIMULANDO ALGUNS SISTEMAS DO DATASET...")
-
-t = np.linspace(0,5,800)
-estado_inicial = [0.1,0]
-
-plt.figure(figsize=(12,7))
-
-cores = {
-    "Sub":"blue",
-    "Super":"green",
-    "Critico":"red",
-    "Instavel":"orange",
-    "Nao amortecido":"purple"
-}
-
-for i in range(10):   # plotar 10 exemplos para não poluir
-    m,b,k,_,_,_,classe = dataset[i]
-
-    sistema = Modelo_Fisico(m,b,k)
-    sol = odeint(sistema.edo, estado_inicial, t)
-
-    plt.plot(t, sol[:,0], color=cores[classe], alpha=0.7)
-
-plt.title("Resposta no Tempo de Sistemas Aleatórios")
-plt.xlabel("Tempo (s)")
-plt.ylabel("Posição (m)")
-plt.grid(True)
-
-# legenda manual
-for classe,cor in cores.items():
-    plt.plot([],[], color=cor, label=classe)
-
-plt.legend()
-plt.show()
-
-
+    # No seu main:
+imprimir_arvore(arvore_id3)
