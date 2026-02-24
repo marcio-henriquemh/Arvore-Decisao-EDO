@@ -6,7 +6,6 @@ from classe_modelagem_fisica import Modelo_Fisico
 from analise_estabilidade import Estabilidade_sistema, ArvoreDecisaoFisica, gerar_dataset
 from algoritmoarvoredecisao import *
 
-# --- FUNÇÕES AUXILIARES ---
 def calcular_metricas(dataset, arvore_id3=None):
     """Calcula Acurácias e Ganhos de Informação."""
     ds_disc = discretizar_dataset(dataset)
@@ -57,16 +56,16 @@ def exibir_metricas_completas(dataset, arvore_id3):
     print(f"\nACURÁCIA FINAL -> Física: {acc_f*100:.1f}% | ID3: {acc_id3*100:.1f}%")
 
 if __name__ == "__main__":
-    # 1. Preparação
+    #  Preparação
     dataset = gerar_dataset(100)
     ds_disc = discretizar_dataset(dataset)
     arvore_id3 = learn_decision_tree(ds_disc, [0, 1])
 
-    # 2. Saídas de Dados
+    #  Saídas de Dados
     exibir_metricas_completas(dataset, arvore_id3)
     comparar_previsoes(dataset, arvore_id3)
 
-    # 3. Visualização Gráfica
+    #  Visualização Gráfica
     df = pd.DataFrame(dataset, columns=["m","b","k","wn","zeta","sigma","classe"])
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
     
