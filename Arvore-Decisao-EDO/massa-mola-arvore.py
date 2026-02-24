@@ -8,7 +8,7 @@ from algoritmoarvoredecisao import *
 
 
 def calcular_metricas(dataset, arvore_id3=None):
-    """Calcula Acurácias e Ganhos de Informação."""
+    """Calcula Acuracias e Ganhos de Informacao."""
     ds_disc = discretizar_dataset(dataset)
     # Acurácia Física
     af = ArvoreDecisaoFisica()
@@ -37,11 +37,11 @@ def comparar_previsoes(dataset, arvore_id3, qtd=10):
         comparativo.append([f"{m:.0f},{b:.0f},{k:.0f}", real, prev_id3])
     
     df_comp = pd.DataFrame(comparativo, columns=["Sistema (m,b,k)", "Real", "Prev. ID3"])
-    print("\n=== COMPARAÇÃO DE PREVISÕES (AMOSTRAS) ===")
+    print("\n=== COMPARACAO DE PREVISOES (AMOSTRAS) ===")
     print(df_comp.to_string(index=False))
 
 def exibir_metricas_completas(dataset, arvore_id3):
-    """Exibe Entropia, Ganhos e Acurácias."""
+    """Exibe Entropia, Ganhos e Acuracias."""
     ds_disc = discretizar_dataset(dataset)
     h_total = entropia(ds_disc)
     gi = {"sigma": ganho_informacao(ds_disc, 0), "zeta": ganho_informacao(ds_disc, 1)}
@@ -50,11 +50,11 @@ def exibir_metricas_completas(dataset, arvore_id3):
     acc_f = sum(1 for d in dataset if af.prever(Modelo_Fisico(d[0], d[1], d[2])) == d[-1]) / len(dataset)
     acc_id3 = sum(1 for i, d in enumerate(dataset) if prever_id3(arvore_id3, ds_disc[i][:2]) == d[-1]) / len(dataset)
 
-    print(f"\n=== ANÁLISE DE INFORMAÇÃO ===")
+    print(f"\n=== ANALISE DE INFORMACAO ===")
     print(f"Entropia Total H(S): {h_total:.4f}")
     print(f"Ganho sigma: {gi['sigma']:.4f} (Incerteza Residual: {h_total - gi['sigma']:.4f})")
     print(f"Ganho zeta: {gi['zeta']:.4f} (Incerteza Residual: {h_total - gi['zeta']:.4f})")
-    print(f"\nACURÁCIA FINAL -> Física: {acc_f*100:.1f}% | ID3: {acc_id3*100:.1f}%")
+    print(f"\nACURACIA FINAL -> Fisica: {acc_f*100:.1f}% | ID3: {acc_id3*100:.1f}%")
 
 if __name__ == "__main__":
     #  Preparação
