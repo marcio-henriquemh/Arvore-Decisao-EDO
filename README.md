@@ -113,9 +113,16 @@ x
 
 O projeto gera automaticamente sistemas físicos aleatórios:
 
-- 50 sistemas massa–mola–amortecedor
-- Parâmetros fisicamente plausíveis
-- Cada sistema é rotulado pela própria física
+* Eles são fisicamente possíveis, mas não representam um sistema específico medido em laboratório.Mas sim suspensão automotiva,isolamento vibracional.
+* 50 sistemas massa–mola–amortecedor
+* A utilização de dados sintéticos neste contexto é metodologicamente adequada pelas se-
+guintes razões:
+  * O objetivo do estudo não é modelar um experimento específico, mas avaliar a capa-
+  cidade da árvore de decisão em recuperar a estrutura teórica do sistema dinâmico e
+   classifica-lo.
+* A classificação é determinística e deriva diretamente das equações físicas.
+* Parâmetros fisicamente plausíveis
+* Cada sistema é rotulado pela própria física
 
 Formato do dataset:
 
