@@ -89,6 +89,28 @@ Essa árvore é **determinística, interpretável e explicável**.
 
 # 🧪 Dataset físico automático
 
+* classe real no dataset não é atribuída manualmente nem aprendida pelo algoritmo de machine learning. Ela é gerada de forma determinística a partir do modelo físico do sistema massa–mola–amortecedor. Inicialmente, são sorteados valores para os parâmetros físicos 
+m
+m (massa), 
+b
+b (coeficiente de amortecimento) e 
+k
+k (constante elástica). Esses valores apenas definem um sistema dinâmico possível dentro do espaço paramétrico admissível.
+
+* A classificação do sistema decorre diretamente das propriedades matemáticas das raízes da equação característica associada à equação diferencial 
+mx¨+bx˙+kx=0
+m
+x
+¨
++b
+x
+˙
++kx=0. Dependendo do valor de 
+ζ
+ζ e do sinal de 
+σ
+σ, o sistema pode ser classificado como instável, subamortecido, superamortecido ou criticamente amortecido
+
 O projeto gera automaticamente sistemas físicos aleatórios:
 
 - 50 sistemas massa–mola–amortecedor
