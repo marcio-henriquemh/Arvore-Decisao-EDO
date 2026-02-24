@@ -147,18 +147,18 @@ Exemplo de saída:
 ### === COMPARAÇÃO DE PREVISÕES (AMOSTRAS) ===
 
 
-| Sistema (m,b,k) | Real | Prev. Física | Prev. ID3 |
-| :--- | :--- | :--- | :--- |
-| 1493, -176, 6118 | Instavel | Instavel | Instavel |
-| 1454, 5727, 25505 | Sub | Sub | Sub |
-| 1879, 16033, 13430 | Super | Super | Super |
-| 706, 17974, 5561 | Super | Super | Super |
-| 1341, -643, 30008 | Instavel | Instavel | Instavel |
-| 1482, 4331, 20701 | Sub | Sub | Sub |
-| 1145, 3202, 24768 | Sub | Sub | Sub |
-| 746, 7823, 16400 | Super | Super | Super |
-| 1896, 9583, 19864 | Sub | Sub | Sub |
-| 1499, 16954, 22303 | Super | Super | Super |
+| Sistema (m,b,k)    | Real     | Prev. ID3 |
+| :----------------- | :------- | :-------- |
+| 1493, -176, 6118   | Instavel | Instavel  |
+| 1454, 5727, 25505  | Sub      | Sub       |
+| 1879, 16033, 13430 | Super    | Super     |
+| 706, 17974, 5561   | Super    | Super     |
+| 1341, -643, 30008  | Instavel | Instavel  |
+| 1482, 4331, 20701  | Sub      | Sub       |
+| 1145, 3202, 24768  | Sub      | Sub       |
+| 746, 7823, 16400   | Super    | Super     |
+| 1896, 9583, 19864  | Sub      | Sub       |
+| 1499, 16954, 22303 | Super    | Super     |
 
 **Conclusão:** Isso prova que a árvore representa corretamente a teoria física.
 
