@@ -218,11 +218,3 @@ Este projeto integra:
 Mostrar que **Machine Learning pode ser interpretável**  
 quando combinamos modelos de decisão com leis físicas.
 ---
-
-# 👨‍💻 Autor
-
-Projeto desenvolvido como estudo interdisciplinar entre:
-
-- Sistemas Dinâmicos  
-- Inteligência Artificial  
-- Modelagem Física  
