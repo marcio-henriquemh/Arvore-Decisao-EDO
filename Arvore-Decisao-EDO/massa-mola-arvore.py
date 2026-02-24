@@ -6,6 +6,7 @@ from classe_modelagem_fisica import Modelo_Fisico
 from analise_estabilidade import Estabilidade_sistema, ArvoreDecisaoFisica, gerar_dataset
 from algoritmoarvoredecisao import *
 
+
 def calcular_metricas(dataset, arvore_id3=None):
     """Calcula Acurácias e Ganhos de Informação."""
     ds_disc = discretizar_dataset(dataset)
@@ -81,4 +82,7 @@ if __name__ == "__main__":
     ax2.set_title("Respostas Temporais"); plt.show()
 
 
+
+
+    # No seu main:
 imprimir_arvore(arvore_id3)
