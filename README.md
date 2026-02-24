@@ -1,7 +1,15 @@
+# Projeto Disciplina de Fundamentos de Inteligência Artificial
+Aqui está a equipe principal:
+
+**Equipe de Desenvolvimento**
+- Marcos Vinicius
+- Marcio Henrique Matos De Freitas
+
 # 🌳 Árvore de Decisão Física para Análise de Estabilidade  
 ### Sistema Massa–Mola–Amortecedor
 
 Este projeto demonstra como aplicar o conceito de **Árvore de Decisão** sem Machine Learning para classificar automaticamente o comportamento de sistemas dinâmicos de segunda ordem usando **apenas leis da física**.
+
 
 A ideia central é:  
 👉 Fazer a árvore de decisão “aprender a física”.
